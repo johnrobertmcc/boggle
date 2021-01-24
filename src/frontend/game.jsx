@@ -1,27 +1,23 @@
 import React from 'react';
+import Board from './board';
 import * as Scrabble from './logic';
 
 export default class Game extends React.Component{
 
     constructor(props) {
         super(props);
-        // const board = new Scrabble.Board(9, 10);
-        // this.state = { board: board };
-        this.updateGame = this.updateGame.bind(this);
-    }
-
-    updateGame(tile, empty) {
-        //checks to see if spot is empty
-        //if spot is empty, place the tile
-        // this.setState({ board: this.state.board });
+        const board = new Scrabble.Board(15).grid;
+        this.state = { board: board };
     }
 
     render(){
+        console.table(this.state.board)
+        console.log(true)
 
         return(
             <div>
                 testing
-                {/* <Board board={this.state.board} updateGame={this.updateGame} /> */}
+                <Board board={this.state.board} />
             </div>
         )
     }
