@@ -1,23 +1,21 @@
 import React from 'react';
 import Board from './board';
-import * as Scrabble from './logic';
+import * as ScrabbleBoard from './logic';
 
 export default class Game extends React.Component{
 
     constructor(props) {
         super(props);
-        const board = new Scrabble.Board(15).grid;
+        const board = new ScrabbleBoard.Board(15);
         this.state = { board: board };
     }
 
     render(){
-        console.table(this.state.board)
-        console.log(true)
 
         return(
             <div>
                 testing
-                <Board board={this.state.board} />
+                <Board board={this.state.board.grid} />
             </div>
         )
     }
