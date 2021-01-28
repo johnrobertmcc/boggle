@@ -1,20 +1,70 @@
 import React from 'react';
-import * as ScrabbleBoard from './logic';
-// import {Tiles} from './tiles';
+import * as BoggleBoard from './logic';
 
 export default class Game extends React.Component{
 
     constructor(props) {
         super(props);
-        const board = new ScrabbleBoard.Board(4);
-        // debugger
-        const bag = new ScrabbleBoard.Tiles().bag;
-        this.state = { board: board, bag: bag, collected: '' };
-        this.baseState = this.state;
+        const board = new BoggleBoard.Board(4);
+        this.state = { 
+            board: board, 
+            collected: '', 
+            time: {}, 
+            seconds: 120 
+        };
 
+        this.baseState = this.state;
+        this.timer = 0;
+        this.startTimer = this.startTimer.bind(this);
         this.printBoard = this.printBoard.bind(this);
-        this.countdown = this.countdown.bind(this);
+        this.countDown = this.countDown.bind(this);
     }
+
+
+    secondsToTime(secs){
+        let hours = Math.floor(secs / (60 * 60));
+
+        let divisor_for_minutes = secs % (60 * 60);
+        let minutes = Math.floor(divisor_for_minutes / 60);
+
+        let divisor_for_seconds = divisor_for_minutes % 60;
+        let seconds = Math.ceil(divisor_for_seconds);
+
+        let obj = {
+        "h": hours,
+        "m": minutes,
+        "s": seconds
+        };
+        return obj;
+    }
+
+    componentDidMount() {
+        let timeLeftVar = this.secondsToTime(this.state.seconds);
+        this.setState({ time: timeLeftVar });
+    }
+
+    startTimer() {
+
+        if (this.timer == 0 && this.state.seconds > 0) {
+        this.timer = setInterval(this.countDown, 1000);
+        }
+    }
+
+    countDown() {
+        // Remove one second, set state so a re-render happens.
+        let seconds = this.state.seconds - 1;
+        this.setState({
+        time: this.secondsToTime(seconds),
+        seconds: seconds,
+        });
+        
+        // Check if we're at zero.
+        if (seconds == 0) { 
+        clearInterval(this.timer);
+        this.setState(this.baseState)
+        }
+    }
+
 
      printBoard(){
         let {board} = this.state;
@@ -28,17 +78,6 @@ export default class Game extends React.Component{
 
     }
 
-    countdown(){
-        var timeleft = 10;
-        var downloadTimer = setInterval(function(){
-        if(timeleft <= 0){
-            clearInterval(downloadTimer);
-        }
-        document.getElementById("progressBar").value = 10 - timeleft;
-        timeleft -= 1;
-        }, 1000);
-    }
-
     render(){
 
         return(
@@ -46,7 +85,10 @@ export default class Game extends React.Component{
                 <h1>Boggle</h1>
 
                 <div className='testing'>
-                    <progress value="0" max="10" id="progressBar"></progress>
+                    <div>
+                        <button onClick={this.startTimer}>Start</button>
+                        m: {this.state.time.m} s: {this.state.time.s}
+                    </div>
                     <div className='game-board'>
                         {/* <div>Remaining Tiles: {this.state.bag}</div> */}
                         {this.printBoard()}
