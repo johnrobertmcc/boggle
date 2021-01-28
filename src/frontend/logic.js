@@ -12,7 +12,7 @@ export class Board {
 
       for(let j = 0; j < this.gridSize; j++){
         let space = new Place([i,j]);
-        row.push(<p onClick={() =>console.log(space.place)}>{space.place}</p>)
+        row.push(<p>{space.place}</p>)
       }
       this.grid.push(row)
     }

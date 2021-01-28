@@ -10,7 +10,9 @@ export default class Game extends React.Component{
             board: board, 
             collected: '', 
             time: {}, 
-            seconds: 120 
+            seconds: 120,
+            letters: [],
+            positions: []
         };
 
         this.baseState = this.state;
@@ -18,6 +20,8 @@ export default class Game extends React.Component{
         this.startTimer = this.startTimer.bind(this);
         this.printBoard = this.printBoard.bind(this);
         this.countDown = this.countDown.bind(this);
+        this.shovelLetters = this.shovelLetters.bind(this);
+        this.checkPos = this.checkPos.bind(this);
     }
 
 
@@ -53,37 +57,65 @@ export default class Game extends React.Component{
     countDown() {
         // Remove one second, set state so a re-render happens.
         let seconds = this.state.seconds - 1;
-        this.setState({
-        time: this.secondsToTime(seconds),
-        seconds: seconds,
+            this.setState({
+            time: this.secondsToTime(seconds),
+            seconds: seconds,
         });
         
         // Check if we're at zero.
         if (seconds == 0) { 
-        clearInterval(this.timer);
-        this.setState(this.baseState)
+            clearInterval(this.timer);
+            this.setState(this.baseState)
+        }
+    }
+
+    checkPos(a, b){
+        for(let i = 0; i < a.length; i++){
+            if(JSON.stringify(a[i]) === JSON.stringify(b)){
+                return false
+            }
+        }
+
+        return true
+    }
+
+    shovelLetters(letter, pos){
+        if(this.checkPos(this.state.positions, pos)){
+            this.setState({
+                letters: this.state.letters.concat([letter]), 
+                positions: this.state.positions.concat([pos])
+            })
         }
     }
 
 
      printBoard(){
-        let {board} = this.state;
-        let temp = []
+        let {board, letters} = this.state;
+        let fin = []
 
         for(let i = 0; i < board.grid.length; i++){
-            temp.push(<div>{board.grid[i]}</div>)
+            let temp = [];
+
+            for(let j = 0; j < board.grid.length; j++){
+                temp.push(
+                <p 
+                onClick={() => this.shovelLetters(board.grid[i][j].props.children, [i, j])}
+                >
+                {board.grid[i][j].props.children}
+                </p>)
+            }
+
+            fin.push(<div>{temp}</div>)
         }
 
-        return temp;
+        return fin;
 
     }
 
     render(){
-
         return(
             <div>
                 <h1>Boggle</h1>
-
                 <div className='testing'>
                     <div>
                         <button onClick={this.startTimer}>Start</button>
@@ -96,6 +128,7 @@ export default class Game extends React.Component{
                 Words Collected:
                 {/* <ul>{this.state.collected}</ul> */}
                 </div>
+                {this.state.letters}
             </div>
         )
     }
