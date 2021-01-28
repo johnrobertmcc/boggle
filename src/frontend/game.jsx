@@ -12,7 +12,8 @@ export default class Game extends React.Component{
             time: {}, 
             seconds: 120,
             letters: [],
-            positions: []
+            positions: [],
+            found:[]
         };
 
         this.baseState = this.state;
@@ -77,6 +78,10 @@ export default class Game extends React.Component{
         }
 
         return true
+    }
+
+    checkForWord(){
+        
     }
 
     shovelLetters(letter, pos){

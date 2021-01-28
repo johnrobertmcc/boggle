@@ -29,9 +29,14 @@ class Place{
     this.generateImage();
   }
 
+  randomLetter(){
+    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+    return alphabet[Math.floor(Math.random() * alphabet.length)]
+  }
+
 
   generateImage(){
-    this.place.push('X')
+    this.place.push(this.randomLetter())
   }
 }
 
