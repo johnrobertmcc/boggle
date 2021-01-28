@@ -4,7 +4,6 @@ import Game from './frontend/game';
 function App() {
   return (
     <div className="App">
-    Scrabble
     <Game />
     </div>
   );

@@ -16,3 +16,13 @@ code {
   display: flex;
   justify-content: center;
 }
+.testing{
+  display: flex;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+.game-board{
+  display: flex;
+  justify-content: center;
+}

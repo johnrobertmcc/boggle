@@ -15,10 +15,12 @@ export class Board {
         // value = i == j ? 2 : 1;
         if(i === j && i !== half){
           value = 2;
-        }else if(i + j === this.gridSize - 1){
+        }else if(i + j === this.gridSize - 1 && i !== half){
           value = 2
-        }else if(i == half && j == half ){
-          value = 'X'
+        }else if(i === half && j === half ){
+          value = 4
+        }else if(i + j === this.gridsize - 1){
+          value = 3
         }else{
           value = 1
         }
@@ -33,6 +35,29 @@ export class Board {
   }
 }
 
+export class Tiles{
+
+  constructor(){
+
+    this.bag = [];
+    this.generateBag()
+
+  }
+
+  generateBag(){
+    let test = new Tile('E', 1);
+    this.bag.push(test.letter)
+  }
+}
+
+class Tile{
+    
+    constructor(letter, value){
+        this.letter = letter;
+        this.value = value;
+    }
+}
+
 class Place{
 
   constructor(value, position){
@@ -45,13 +70,13 @@ class Place{
   image(value){
     switch (value) {
       case 3:
-        return (<div onClick={() => console.log(`${this.position}`)}>[3]</div>);
+        return (<div onClick={() => console.log(`${this.position}, ${this.value}`)}>[3]</div>);
       case 2:
-        return (<div onClick={() => console.log(`${this.position}`)}>[2]</div>);
-      case 'X':
-        return (<div onClick={() => console.log(`${this.position}`)}>[X]</div>);
+        return (<div onClick={() => console.log(`${this.position}, ${this.value}`)}>[2]</div>);
+      case 4:
+        return (<div onClick={() => console.log(`${this.position}, ${this.value}`)}>[X]</div>);
       default:
-        return (<div onClick={() => console.log(`${this.position}`)}>[1]</div>);
+        return (<div onClick={() => console.log(`${this.position},  ${this.value}`)}>[1]</div>);
     }
   }
 
