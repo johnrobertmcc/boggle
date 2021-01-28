@@ -1,5 +1,8 @@
 import React from 'react';
 import * as BoggleBoard from './logic';
+import {applicationID, applicationKey} from '../keys';
+import oxford from 'oxford-dictionary-api';
+
 
 export default class Game extends React.Component{
 
@@ -23,6 +26,7 @@ export default class Game extends React.Component{
         this.countDown = this.countDown.bind(this);
         this.shovelLetters = this.shovelLetters.bind(this);
         this.checkPos = this.checkPos.bind(this);
+        this.checkWork = this.checkWork.bind(this);
     }
 
 
@@ -81,7 +85,7 @@ export default class Game extends React.Component{
     }
 
     checkForWord(){
-        
+
     }
 
     shovelLetters(letter, pos){
@@ -117,10 +121,17 @@ export default class Game extends React.Component{
 
     }
 
+    checkWork(){
+        let oxforddictionaries = new oxford(applicationID, applicationKey);
+        debugger
+       
+    }
+
     render(){
         return(
             <div>
                 <h1>Boggle</h1>
+                {this.checkWork()}
                 <div className='testing'>
                     <div>
                         <button onClick={this.startTimer}>Start</button>
