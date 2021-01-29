@@ -28,6 +28,7 @@ export default class Game extends React.Component{
         this.checkForWord = this.checkForWord.bind(this);
         this.validMove = this.validMove.bind(this);
         this.resetGame = this.resetGame.bind(this);
+        this.score = this.score.bind(this);
     }
 
 
@@ -91,7 +92,7 @@ export default class Game extends React.Component{
     }
 
     checkForWord(word){
-        let temp = word.join('');   
+        let temp = word.join('').toLowerCase();   
         
         if(data[temp] === 1 && temp.length > 2 && !this.state.found.includes(temp)){
             
@@ -109,7 +110,7 @@ export default class Game extends React.Component{
     }
 
 
-     printBoard(){
+    printBoard(){
         let {board} = this.state;
         let fin = []
 
@@ -119,6 +120,7 @@ export default class Game extends React.Component{
             for(let j = 0; j < board.grid.length; j++){
                 temp.push(
                 <p 
+                className='letters'
                 onClick={() => this.shovelLetters(board.grid[i][j].props.children, [i, j])}
                 >
                 {board.grid[i][j].props.children}
@@ -134,7 +136,34 @@ export default class Game extends React.Component{
 
     resetGame(){
         board.resetBoard();
-        this.setState(baseState)
+        this.setState(baseState);
+    }
+
+    score(){
+        let score = 0;
+        this.state.found.forEach(word => {
+            let length = word.length;
+            switch (length) {
+                case 5:
+                    score += 2;
+                    break;
+                case 6:
+                    score += 3;
+                    break;        
+                case 7:
+                    score += 4;
+                    break;        
+                case 8:
+                    score += 11;
+                    break;        
+                default:
+                    score += 1;  
+                    break;
+            }
+
+        })
+
+        return score;
     }
 
 
@@ -142,13 +171,14 @@ export default class Game extends React.Component{
         return(
             <div>
                 <h1>Boggle</h1>
+                {this.score()}
                 {this.checkForWord(this.state.letters)}
                 <div className='testing'>
                     <div className='button-sides'>
                         <button onClick={this.startTimer}>Start</button>
                         m: {this.state.time.m} s: {this.state.time.s}
                         <button onClick={e => this.resetGame()}>Reset Game</button>
-
+                        <button onClick={() => this.setState({letters:[]})}>Clear Word</button>
                     </div>
                     <div className='game-board'>
                         {this.printBoard()}

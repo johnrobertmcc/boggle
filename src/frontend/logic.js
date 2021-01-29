@@ -1,7 +1,3 @@
-
-
-
-
 export class Board {
 
   constructor(gridSize) {
@@ -16,7 +12,7 @@ export class Board {
 
       for(let j = 0; j < this.gridSize; j++){
         let space = new Place([i,j]);
-        row.push(<p>{space.place}</p>)
+        row.push(<p className='letters'>{space.place}</p>)
       }
       this.grid.push(row)
     }
@@ -39,8 +35,8 @@ class Place{
   }
 
   randomLetter(){
-    const alphabet = "abcdefghijklmnopqrstuvwxyztimetimetimetimetimetimetime"
-    return alphabet[Math.floor(Math.random() * alphabet.length)]
+    const alphabet = "aaaabcdeeeefghiiiijklmnoooopqrstuvwxyz"
+    return alphabet[Math.floor(Math.random() * alphabet.length)].toUpperCase()
   }
 
 
