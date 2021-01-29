@@ -1,6 +1,6 @@
 import React from 'react';
 import * as BoggleBoard from './logic';
-import fs from 'fs';
+import fs from 'file-system';
 import checkWord from 'check-word';
 const board = new BoggleBoard.Board(4);
 
@@ -78,20 +78,8 @@ export default class Game extends React.Component{
 
     validMove(pos){
         return true
-
     }
 
-    showFile(e) {
-        const reader = new FileReader();
-        debugger
-
-        reader.onload = async (e) => { 
-            const text = (e.target.result)
-            console.log(text)
-            // alert(text)
-        };
-        reader.readAsText(e.target.files[0])
-    }
 
     checkPos(a, b){
         for(let i = 0; i < a.length; i++){
@@ -105,9 +93,7 @@ export default class Game extends React.Component{
 
     checkForWord(word){
         let temp = word.join('');
-        if(checkWord('en')){
-            debugger
-        }
+   
         
         if(temp === 'time' && !this.state.found.includes(temp)){
             
