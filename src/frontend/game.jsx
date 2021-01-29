@@ -1,9 +1,8 @@
 import React from 'react';
 import * as BoggleBoard from './logic';
-import fs from 'file-system';
-import checkWord from 'check-word';
-const board = new BoggleBoard.Board(4);
+import data from './data/words_dictionary.json';
 
+const board = new BoggleBoard.Board(4);
 const baseState ={ 
             board, 
             collected: '', 
@@ -92,10 +91,9 @@ export default class Game extends React.Component{
     }
 
     checkForWord(word){
-        let temp = word.join('');
-   
+        let temp = word.join('');   
         
-        if(temp === 'time' && !this.state.found.includes(temp)){
+        if(data[temp] === 1 && temp.length > 2 && !this.state.found.includes(temp)){
             
             this.setState({found: this.state.found.concat(temp), letters: [], positions: []})
         }
