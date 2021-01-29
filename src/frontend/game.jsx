@@ -235,7 +235,7 @@ export default class Game extends React.Component{
         let {gameOn, letters, time} = this.state;
         return(
             <div className='page'>
-                <h1 className='title'>Boggle!</h1>
+                <h1 className='title'>Boggle</h1>
                 { gameOn 
                 ?
                 <h3>{this.score()}</h3>

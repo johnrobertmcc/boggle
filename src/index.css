@@ -55,9 +55,31 @@ code {
 .title{
   font-size: 50px;
 }
+
 .page{
   padding: 10%;
   height:100vh;
+  display: block;
+  position: relative;
+   /* background: #CFECD9;
+background: -webkit-linear-gradient(top left, #CFECD9, #F3F6F6);
+background: -moz-linear-gradient(top left, #CFECD9, #F3F6F6);
+background: linear-gradient(to bottom right, #CFECD9, #F3F6F6); */
+
+}
+
+.page::after{
+  content: "";
+  background-image: url('./transparent-flower.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+   opacity: 0.08;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;  
 }
 
 button{
