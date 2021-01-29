@@ -240,7 +240,7 @@ export default class Game extends React.Component{
                 ?
                 <h3>{this.score()}</h3>
                 :
-                <h3>Press the start button to play!</h3>
+                <h3 className='instructions'>Press the start button to play</h3>
                 }
                 {this.checkForWord(letters)}
                 <div className='dashboard'>
@@ -248,7 +248,8 @@ export default class Game extends React.Component{
                     <div className='left-side'>
                         {gameOn 
                         ? 
-                        `m: ${time.m} s: ${time.s}`
+                        `
+                        ${time.m} : ${time.s}`
                         :
                         null}
                         <br></br>
@@ -260,6 +261,17 @@ export default class Game extends React.Component{
                         }
                         <br></br>
                         <button onClick={() => this.setState({letters:[], prevPos: null, positions: []})}>Clear Word</button>
+                        <div className='flex-footer'>
+                            <hr className='footer-sidebar'></hr>
+                            <div className='sidebar-icons'>
+                                <a href='https://github.com/johnrobertmcc' target="_blank"><i className="fab fa-github"></i></a>
+                                <a href='https://www.linkedin.com/in/jrmcc/' target="_blank"><i className="fab fa-linkedin-in"></i></a>
+                                <a href='https://angel.co/u/john-robert-mccann' target="_blank"><i className="fab fa-angellist"></i></a>
+                            </div>
+                            <br></br>
+                            <p className='sig'>created by <br></br><a className="personal" href="https://www.johnrobertmcc.com/" target="_blank">John Robert McCann</a></p>
+                            
+                        </div>
                     </div>
                     
                     <div className='game-board'>
@@ -267,8 +279,8 @@ export default class Game extends React.Component{
                     </div>
 
                     <div className='right-side'>
-                    <p>Words Collected</p>
-                    <ul>{this.foundWords()}</ul>
+                    <h5>Words Collected</h5>
+                    <ul className='found-list'>{this.foundWords()}</ul>
                     </div>
 
                 </div>
