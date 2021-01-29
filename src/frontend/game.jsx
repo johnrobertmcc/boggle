@@ -1,6 +1,8 @@
 import React from 'react';
 import * as BoggleBoard from './logic';
-let board = new BoggleBoard.Board(4);
+import fs from 'fs';
+import checkWord from 'check-word';
+const board = new BoggleBoard.Board(4);
 
 const baseState ={ 
             board, 
@@ -79,6 +81,18 @@ export default class Game extends React.Component{
 
     }
 
+    showFile(e) {
+        const reader = new FileReader();
+        debugger
+
+        reader.onload = async (e) => { 
+            const text = (e.target.result)
+            console.log(text)
+            // alert(text)
+        };
+        reader.readAsText(e.target.files[0])
+    }
+
     checkPos(a, b){
         for(let i = 0; i < a.length; i++){
             if(JSON.stringify(a[i]) === JSON.stringify(b)){
@@ -90,9 +104,13 @@ export default class Game extends React.Component{
     }
 
     checkForWord(word){
-        let temp = word.join('')
-
+        let temp = word.join('');
+        if(checkWord('en')){
+            debugger
+        }
+        
         if(temp === 'time' && !this.state.found.includes(temp)){
+            
             this.setState({found: this.state.found.concat(temp), letters: [], positions: []})
         }
     }

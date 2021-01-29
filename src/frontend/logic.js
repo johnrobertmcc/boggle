@@ -1,5 +1,7 @@
 
 
+
+
 export class Board {
 
   constructor(gridSize) {
@@ -24,13 +26,6 @@ export class Board {
   resetBoard(){
     this.grid = [];
     this.generateBoard();
-  }
-
-  checkWord(word){
-    var checkWord = require('check-word'),
-    words     = checkWord('en');
-
-    words.check(word)
   }
 }
 
