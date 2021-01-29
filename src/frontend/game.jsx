@@ -10,7 +10,8 @@ const baseState ={
             seconds: 120,
             letters: [],
             positions: [],
-            found:[]
+            found:[],
+            prevPos: null
         }
 
 export default class Game extends React.Component{
@@ -76,8 +77,47 @@ export default class Game extends React.Component{
         }
     }
 
-    validMove(pos){
-        return true
+    validMove(prevPos, pos){
+        let x = pos[0];
+        let y = pos[1];
+      
+        
+        if(prevPos !== null){
+            let x1 = prevPos[0];
+            let y1 = prevPos[1];
+            console.log(pos)
+            console.log(prevPos)
+
+            if(x1 === x && y - y1 !== 1){
+                //going up
+                return true;
+            }else if( x1 === x && y - y1 !== -1){
+                //going down
+                return true;
+            }else if(y === y1 && x - x1 !== 1){
+                //going left
+                return true;
+            }else if(y === y1 && x1 - x !== 1){
+                //going left
+                return true;
+            }else if(y - y1 === 1 && x1 - x === 1){
+                //going diagonal up
+                return true;
+            }else if(y1 - y === 1 && x1 - x === 1){
+                //going diagonal up
+                return true;
+            }else if(y - y1 === 1 && x - x1 === 1){
+                //going diagonal up
+                return true;
+            }else if(y1 - y === 1 && x - x1 === 1){
+                //going diagonal up
+                return true;
+            }
+            
+
+            
+        }
+       return prevPos === null ? true : false;
     }
 
 
@@ -96,17 +136,34 @@ export default class Game extends React.Component{
         
         if(data[temp] === 1 && temp.length > 2 && !this.state.found.includes(temp)){
             
-            this.setState({found: this.state.found.concat(temp), letters: [], positions: []})
+            this.setState({
+                found: this.state.found.concat(temp), 
+                letters: [], 
+                positions: [], 
+                prevPos: null
+            })
         }
     }
 
     shovelLetters(letter, pos){ 
-        if(this.checkPos(this.state.positions, pos) && this.validMove(pos)){
+        if(this.checkPos(this.state.positions, pos) && this.validMove(this.state.prevPos, pos)){
             this.setState({
                 letters: this.state.letters.concat([letter]), 
-                positions: this.state.positions.concat([pos])
+                positions: this.state.positions.concat([pos]),
+                prevPos: pos
             })
         }
+    }
+
+    foundWords(){
+        let {found} = this.state;
+        let list = [];
+
+        for(let i = 0; i < found.length; i++){
+            list.push(<li>{found[i]}</li>)
+        }
+
+        return list;
     }
 
 
@@ -175,18 +232,23 @@ export default class Game extends React.Component{
                 {this.checkForWord(this.state.letters)}
                 <div className='testing'>
                     <div className='button-sides'>
-                        <button onClick={this.startTimer}>Start</button>
                         m: {this.state.time.m} s: {this.state.time.s}
+                        <br></br>
+                        <button onClick={this.startTimer}>Start</button>
+                        <br></br>
                         <button onClick={e => this.resetGame()}>Reset Game</button>
-                        <button onClick={() => this.setState({letters:[]})}>Clear Word</button>
+                        <br></br>
+                        <button onClick={() => this.setState({letters:[], prevPos: null, positions: []})}>Clear Word</button>
                     </div>
                     <div className='game-board'>
                         {this.printBoard()}
                     </div>
-                Words Collected:
-                    {this.state.found}
+
+                    Words Collected
+                    <ul>{this.foundWords()}</ul>
                 </div>
                 {this.state.letters}
+                {this.state.prevPos}
             </div>
         )
     }
