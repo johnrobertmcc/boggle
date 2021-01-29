@@ -39,5 +39,3 @@ class Place{
     this.place.push(this.randomLetter())
   }
 }
-
-// Place = {value: value, image: image}
