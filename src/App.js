@@ -3,8 +3,9 @@ import Game from './frontend/game';
 
 function App() {
   return (
+
     <div className="App">
-    <Game />
+      <Game />
     </div>
   );
 }

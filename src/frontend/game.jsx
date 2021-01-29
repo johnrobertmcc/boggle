@@ -11,7 +11,8 @@ const baseState ={
             letters: [],
             positions: [],
             found:[],
-            prevPos: null
+            prevPos: null,
+            gameOn: false
         }
 
 export default class Game extends React.Component{
@@ -56,9 +57,9 @@ export default class Game extends React.Component{
     }
 
     startTimer() {
-
-        if (this.timer === 0 && this.state.seconds > 0) {
+        if(this.timer === 0 && this.state.seconds > 0) {
         this.timer = setInterval(this.countDown, 1000);
+        this.setState({gameOn: true})
         }
     }
 
@@ -73,7 +74,7 @@ export default class Game extends React.Component{
         // Check if we're at zero.
         if (seconds === 0) { 
             clearInterval(this.timer);
-            this.setState(this.baseState)
+            this.resetGame();
         }
     }
 
@@ -160,7 +161,7 @@ export default class Game extends React.Component{
         let list = [];
 
         for(let i = 0; i < found.length; i++){
-            list.push(<li>{found[i]}</li>)
+            list.push(<li className='words'>{found[i]}</li>)
         }
 
         return list;
@@ -168,20 +169,25 @@ export default class Game extends React.Component{
 
 
     printBoard(){
-        let {board} = this.state;
+        let {board, gameOn} = this.state;
         let fin = []
 
         for(let i = 0; i < board.grid.length; i++){
             let temp = [];
 
             for(let j = 0; j < board.grid.length; j++){
+                gameOn 
+                ? 
                 temp.push(
                 <p 
-                className='letters'
+                className={this.checkPos(this.state.positions, [i, j]) ? 'letters' : 'test'}
                 onClick={() => this.shovelLetters(board.grid[i][j].props.children, [i, j])}
                 >
                 {board.grid[i][j].props.children}
                 </p>)
+                :
+                temp.push(<p className='letters'>X</p>)
+                
             }
 
             fin.push(<div>{temp}</div>)
@@ -194,6 +200,7 @@ export default class Game extends React.Component{
     resetGame(){
         board.resetBoard();
         this.setState(baseState);
+        this.timer = 0;
     }
 
     score(){
@@ -225,30 +232,47 @@ export default class Game extends React.Component{
 
 
     render(){
+        let {gameOn, letters, time} = this.state;
         return(
-            <div>
-                <h1>Boggle</h1>
-                {this.score()}
-                {this.checkForWord(this.state.letters)}
-                <div className='testing'>
-                    <div className='button-sides'>
-                        m: {this.state.time.m} s: {this.state.time.s}
+            <div className='page'>
+                <h1 className='title'>Boggle!</h1>
+                { gameOn 
+                ?
+                <h3>{this.score()}</h3>
+                :
+                <h3>Press the start button to play!</h3>
+                }
+                {this.checkForWord(letters)}
+                <div className='dashboard'>
+
+                    <div className='left-side'>
+                        {gameOn 
+                        ? 
+                        `m: ${time.m} s: ${time.s}`
+                        :
+                        null}
                         <br></br>
-                        <button onClick={this.startTimer}>Start</button>
-                        <br></br>
-                        <button onClick={e => this.resetGame()}>Reset Game</button>
+                        {gameOn 
+                        ?
+                        <button onClick={() => this.resetGame()}>Reset</button>
+                        : 
+                        <button onClick={ this.startTimer}> Start Timer </button>
+                        }
                         <br></br>
                         <button onClick={() => this.setState({letters:[], prevPos: null, positions: []})}>Clear Word</button>
                     </div>
+                    
                     <div className='game-board'>
                         {this.printBoard()}
                     </div>
 
-                    Words Collected
+                    <div className='right-side'>
+                    <p>Words Collected</p>
                     <ul>{this.foundWords()}</ul>
+                    </div>
+
                 </div>
-                {this.state.letters}
-                {this.state.prevPos}
+                {letters}
             </div>
         )
     }

@@ -16,9 +16,9 @@ code {
   display: flex;
   justify-content: center;
 }
-.testing{
+.dashboard{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-content: center;
 }
 
@@ -26,6 +26,7 @@ code {
   display: flex;
   justify-content: center;
   font-size: 30px;
+  border: 1px solid black;
 }
 
 .letters{
@@ -33,6 +34,34 @@ code {
   padding-left: 10px;
 }
 
-.button-sides{
-  display: flex-column;
+.test{
+  color:green;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.left-side{
+  border: 1px solid black;
+}
+
+.words{
+  list-style: none;
+}
+
+.right-side{
+  display:flex;
+  border: 1px solid black;
+}
+.title{
+  font-size: 50px;
+}
+.page{
+  padding: 10%;
+  height:100vh;
+}
+
+button{
+  border:none;
+  /* height: 3%; */
+  margin: 10%;
 }
