@@ -1,3 +1,5 @@
+
+
 export class Board {
 
   constructor(gridSize) {
@@ -18,6 +20,18 @@ export class Board {
     }
   
   }
+
+  resetBoard(){
+    this.grid = [];
+    this.generateBoard();
+  }
+
+  checkWord(word){
+    var checkWord = require('check-word'),
+    words     = checkWord('en');
+
+    words.check(word)
+  }
 }
 
 
@@ -30,7 +44,7 @@ class Place{
   }
 
   randomLetter(){
-    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+    const alphabet = "abcdefghijklmnopqrstuvwxyztimetimetimetimetimetimetime"
     return alphabet[Math.floor(Math.random() * alphabet.length)]
   }
 

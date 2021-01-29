@@ -1,29 +1,32 @@
 import React from 'react';
 import * as BoggleBoard from './logic';
+let board = new BoggleBoard.Board(4);
 
-export default class Game extends React.Component{
-
-    constructor(props) {
-        super(props);
-        const board = new BoggleBoard.Board(4);
-        this.state = { 
-            board: board, 
+const baseState ={ 
+            board, 
             collected: '', 
             time: {}, 
             seconds: 120,
             letters: [],
             positions: [],
             found:[]
-        };
+        }
 
-        this.baseState = this.state;
+export default class Game extends React.Component{
+
+    constructor(props) {
+        super(props);
+        this.state = baseState;
         this.timer = 0;
+
         this.startTimer = this.startTimer.bind(this);
         this.printBoard = this.printBoard.bind(this);
         this.countDown = this.countDown.bind(this);
         this.shovelLetters = this.shovelLetters.bind(this);
         this.checkPos = this.checkPos.bind(this);
         this.checkForWord = this.checkForWord.bind(this);
+        this.validMove = this.validMove.bind(this);
+        this.resetGame = this.resetGame.bind(this);
     }
 
 
@@ -51,7 +54,7 @@ export default class Game extends React.Component{
 
     startTimer() {
 
-        if (this.timer == 0 && this.state.seconds > 0) {
+        if (this.timer === 0 && this.state.seconds > 0) {
         this.timer = setInterval(this.countDown, 1000);
         }
     }
@@ -65,10 +68,15 @@ export default class Game extends React.Component{
         });
         
         // Check if we're at zero.
-        if (seconds == 0) { 
+        if (seconds === 0) { 
             clearInterval(this.timer);
             this.setState(this.baseState)
         }
+    }
+
+    validMove(pos){
+        return true
+
     }
 
     checkPos(a, b){
@@ -81,14 +89,16 @@ export default class Game extends React.Component{
         return true
     }
 
-    checkForWord(){
+    checkForWord(word){
+        let temp = word.join('')
 
-    //    console.log(words.check(Array.toString(this.state.letters)))
-
+        if(temp === 'time' && !this.state.found.includes(temp)){
+            this.setState({found: this.state.found.concat(temp), letters: [], positions: []})
+        }
     }
 
-    shovelLetters(letter, pos){
-        if(this.checkPos(this.state.positions, pos)){
+    shovelLetters(letter, pos){ 
+        if(this.checkPos(this.state.positions, pos) && this.validMove(pos)){
             this.setState({
                 letters: this.state.letters.concat([letter]), 
                 positions: this.state.positions.concat([pos])
@@ -98,7 +108,7 @@ export default class Game extends React.Component{
 
 
      printBoard(){
-        let {board, letters} = this.state;
+        let {board} = this.state;
         let fin = []
 
         for(let i = 0; i < board.grid.length; i++){
@@ -120,21 +130,29 @@ export default class Game extends React.Component{
 
     }
 
+    resetGame(){
+        board.resetBoard();
+        this.setState(baseState)
+    }
+
 
     render(){
         return(
             <div>
                 <h1>Boggle</h1>
-                {this.checkForWord()}
+                {this.checkForWord(this.state.letters)}
                 <div className='testing'>
-                    <div>
+                    <div className='button-sides'>
                         <button onClick={this.startTimer}>Start</button>
                         m: {this.state.time.m} s: {this.state.time.s}
+                        <button onClick={e => this.resetGame()}>Reset Game</button>
+
                     </div>
                     <div className='game-board'>
                         {this.printBoard()}
                     </div>
                 Words Collected:
+                    {this.state.found}
                 </div>
                 {this.state.letters}
             </div>
