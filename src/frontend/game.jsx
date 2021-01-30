@@ -232,7 +232,7 @@ export default class Game extends React.Component{
 
 
     render(){
-        let {gameOn, letters, time} = this.state;
+        let {gameOn, letters, time, found} = this.state;
         return(
             <div className='page'>
                 <h1 className='title'>Boggle</h1>
@@ -243,6 +243,23 @@ export default class Game extends React.Component{
                 <h3 className='instructions'>Press the start button to play</h3>
                 }
                 {this.checkForWord(letters)}
+
+                 <div className='left-side2'>
+                        {gameOn 
+                        ?
+                        <button onClick={() => this.resetGame()}>Reset</button>
+                        : 
+                        <button onClick={ this.startTimer}> Start Timer </button>
+                        }
+                        {gameOn 
+                        ? 
+                        <p className='mobile-timer'>
+                        {time.m}:{time.s}
+                        </p>
+                        :
+                        null}
+                        <button onClick={() => this.setState({letters:[], prevPos: null, positions: []})}>Clear Selection</button>
+                    </div>
                 <div className='dashboard'>
 
                     <div className='left-side'>
@@ -260,7 +277,7 @@ export default class Game extends React.Component{
                         <button onClick={ this.startTimer}> Start Timer </button>
                         }
                         <br></br>
-                        <button onClick={() => this.setState({letters:[], prevPos: null, positions: []})}>Clear Word</button>
+                        <button onClick={() => this.setState({letters:[], prevPos: null, positions: []})}>Clear Selection</button>
                         <div className='flex-footer'>
                             <hr className='footer-sidebar'></hr>
                             <div className='sidebar-icons'>
@@ -274,17 +291,35 @@ export default class Game extends React.Component{
                         </div>
                     </div>
                     
-                    <div className='game-board'>
-                        {this.printBoard()}
-                    </div>
+                
+                        
+                        <div className='game-board'>
+                            {this.printBoard()}
+                        </div>
 
                     <div className='right-side'>
-                    <h5>Words Collected</h5>
+                    <h5>Words Collected ({found.length})</h5>
                     <ul className='found-list'>{this.foundWords()}</ul>
                     </div>
 
                 </div>
-                {letters}
+                <div className='current'>{letters}</div>
+                
+                <div className='right-side2'>
+                    <h5>Words Collected ({found.length})</h5>
+                    <ul className='found-list2'>{this.foundWords()}</ul>
+                </div>
+                <div className='mobile-footer'>
+                    <hr className='footer-sidebar2'></hr>
+                    <div className='sidebar-icons'>
+                        <a href='https://github.com/johnrobertmcc' target="_blank"><i className="fab fa-github"></i></a>
+                        <a href='https://www.linkedin.com/in/jrmcc/' target="_blank"><i className="fab fa-linkedin-in"></i></a>
+                        <a href='https://angel.co/u/john-robert-mccann' target="_blank"><i className="fab fa-angellist"></i></a>
+                    </div>
+                    <br></br>
+                    <p className='sig'>created by <br></br><a className="personal" href="https://www.johnrobertmcc.com/" target="_blank">John Robert McCann</a></p>
+                    
+                </div>
             </div>
         )
     }
