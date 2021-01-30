@@ -117,7 +117,7 @@ button{
   background: none;
   font-weight:400;
   /* height: 3%; */
-  margin: 10%;
+  margin: 8%;
   padding: 3%;
   box-shadow: 3px 3px 3px 1px rgba(233, 159, 233, 0.09);
 
@@ -273,7 +273,7 @@ body{
   }
 
   .mobile-timer{
-    font-size:20px;
+    font-size:15px;
     align-self: center;
     margin:auto;
     padding:auto;
