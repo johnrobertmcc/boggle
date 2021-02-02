@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/boggle/static/css/main.d34a33c1.chunk.css",
+    "main.css": "/boggle/static/css/main.b1f3590d.chunk.css",
     "main.js": "/boggle/static/js/main.ef17cd31.chunk.js",
     "main.js.map": "/boggle/static/js/main.ef17cd31.chunk.js.map",
     "runtime-main.js": "/boggle/static/js/runtime-main.a379ff59.js",
@@ -10,14 +10,14 @@
     "static/js/3.d959bb53.chunk.js": "/boggle/static/js/3.d959bb53.chunk.js",
     "static/js/3.d959bb53.chunk.js.map": "/boggle/static/js/3.d959bb53.chunk.js.map",
     "index.html": "/boggle/index.html",
-    "static/css/main.d34a33c1.chunk.css.map": "/boggle/static/css/main.d34a33c1.chunk.css.map",
+    "static/css/main.b1f3590d.chunk.css.map": "/boggle/static/css/main.b1f3590d.chunk.css.map",
     "static/js/2.35259761.chunk.js.LICENSE.txt": "/boggle/static/js/2.35259761.chunk.js.LICENSE.txt",
     "static/media/index.css": "/boggle/static/media/transparent-flower.3f1df388.png"
   },
   "entrypoints": [
     "static/js/runtime-main.a379ff59.js",
     "static/js/2.35259761.chunk.js",
-    "static/css/main.d34a33c1.chunk.css",
+    "static/css/main.b1f3590d.chunk.css",
     "static/js/main.ef17cd31.chunk.js"
   ]
 }
